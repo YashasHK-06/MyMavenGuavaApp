@@ -33,11 +33,11 @@
             <version>2.13.0</version>
         </dependency>
 
-        <!-- JUnit for tests -->
+        <!-- JUnit (updated) -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>3.8.1</version>
+            <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
 
@@ -53,44 +53,49 @@
                 <version>3.11.0</version>
             </plugin>
 
-            <!-- Exec Plugin -->
+            <!-- Exec Plugin (optional for running main class) -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.1.0</version>
             </plugin>
-<plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-jar-plugin</artifactId>
-    <version>3.3.0</version>
-    <configuration>
-        <archive>
-            <manifest>
-                <mainClass>com.example.App</mainClass>
-            </manifest>
-        </archive>
-    </configuration>
-</plugin>
-<plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-shade-plugin</artifactId>
-    <version>3.5.0</version>
-    <executions>
-        <execution>
-            <phase>package</phase>
-            <goals>
-                <goal>shade</goal>
-            </goals>
-            <configuration>
-                <transformers>
-                    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                        <mainClass>com.example.App</mainClass>
-                    </transformer>
-                </transformers>
-            </configuration>
-        </execution>
-    </executions>
-</plugin>
+
+            <!-- Jar Plugin (adds Main-Class) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.example.App</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <!-- Shade Plugin (creates runnable fat JAR) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>MyMavenGuavaApp</finalName>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>com.example.App</mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
         </plugins>
     </build>
