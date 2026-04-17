@@ -1,14 +1,10 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'Maven'
-    }
-
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'master', url: 'https://github.com/YashasHK-06/MyMavenGuavaApp.git'
+                git branch: 'main', url: 'https://github.com/YashasHK-06/MyMavenGuavaApp.git'
             }
         }
 
@@ -18,25 +14,10 @@ pipeline {
             }
         }
 
-        stage('Test') {
+        stage('Run') {
             steps {
-                sh 'mvn test'
+                sh 'java -jar target/MyMavenGuavaApp.jar'
             }
-        }
-
-        stage('Run Application') {
-            steps {
-                sh 'java -jar target/MyMavenGuavaApp-1.0-SNAPSHOT.jar'
-            }
-        }
-    }
-
-    post {
-        success {
-            echo 'Build and deployment successful!'
-        }
-        failure {
-            echo 'Build failed!'
         }
     }
 }
